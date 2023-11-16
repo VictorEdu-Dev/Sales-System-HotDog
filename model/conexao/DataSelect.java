@@ -11,26 +11,38 @@ import proteinas.CachorroQuente;
 
 public class DataSelect {
 	private Connection connection;
-
-	public DataSelect(Connection connection) {
-		this.connection = connection;
+	private ConnectionDatabase initDatabase;
+	
+	public DataSelect() {
 	}
 
 	// Método para obter uma lista de alunos do banco de dados
-	public static List<MembroUniversitario> obterClientes(Connection connection) {
+	public List<MembroUniversitario> obterClientes() {
 		List<MembroUniversitario> clientes = new ArrayList<>();
+		
+		initDatabase = new ConnectionDatabase(
+				"test_db.mysql.dbaas.com.br:3306",
+				"test_db",
+				"test_db",
+				"TecProg23-2!@"
+				);
+		connection = initDatabase.getConnection();
+		
 		try {
 			Statement statement = connection.createStatement();
-			String query = "SELECT idNominal, cliente, matricula FROM universitarios";
+			String query = "SELECT nome, matricula FROM cachorro_quente";
 			ResultSet resultSet = statement.executeQuery(query);
+			
 			while (resultSet.next()) {
-				String nome = resultSet.getString("cliente");
-				String matricula = resultSet.getString("matricula");
-				String identificador = resultSet.getString("idNominal");
+				
+				String nome = resultSet.getString("nome");
+				String matricula = String.valueOf(resultSet.getString("matricula"));
 				MembroUniversitario cliente = new MembroUniversitario(nome, matricula);
-				cliente.setIdNominal(identificador);
+				
+				cliente.setIdNominal("Membro universitário");
 				clientes.add(cliente);
 			}
+			connection.close();
 		} catch (SQLException e) {
 			System.out.println("Lista nula ou banco de dados não conectado.");
 			e.printStackTrace();
@@ -39,31 +51,45 @@ public class DataSelect {
 	}
 
 	// Método para obter uma lista de vendas realizadas do banco de dados
-	public static List<CachorroQuente> obterVendas(Connection connection) {
+	public List<CachorroQuente> obterVendas() {
 		List<CachorroQuente> vendas = new ArrayList<>();
+		
+		initDatabase = new ConnectionDatabase(
+				"test_db.mysql.dbaas.com.br:3306",
+				"test_db",
+				"test_db",
+				"TecProg23-2!@"
+				);
+		connection = initDatabase.getConnection();
+		
 		try {			
 			Statement statement = connection.createStatement();
-			String query = "SELECT proteina, queijo, bebida, preco, aluno_id FROM vendarealizadas";
+			String query = "SELECT nome, matricula, op_proteina, op_queijo, bebida, valor FROM cachorro_quente";
 			ResultSet resultSet = statement.executeQuery(query);
+			
 			while (resultSet.next()) {
-				int identificador = resultSet.getInt("aluno_id");
-				String proteina = resultSet.getString("proteina");
-				String queijo = resultSet.getString("queijo");
+				String nome = resultSet.getString("nome");
+				int matricula = resultSet.getInt("matricula");
+				String proteina = resultSet.getString("op_proteina");
+				String queijo = resultSet.getString("op_queijo");
 				String bebida = resultSet.getString("bebida");
-				float preco = resultSet.getFloat("preco");
+				float preco = resultSet.getFloat("valor");
 
 				CachorroQuente venda = new CachorroQuente();
 				venda.setBebida(bebida);
 				venda.setProteina(proteina);
 				venda.setQueijo(queijo);
 				venda.setPrice(preco);
-				venda.setIdentificador(identificador);
+				venda.setNome(nome);
+				venda.setMatricula(String.valueOf(matricula));
 
 				vendas.add(venda);
 			}
+			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return vendas;
 	}
 

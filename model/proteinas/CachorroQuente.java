@@ -9,7 +9,8 @@ public class CachorroQuente {
 	private String bebida;
 	private ArrayList<String> adicionais;
 	private float price;
-	private int identificador;
+	private String nome;
+	private String matricula;
 	
 	
 	public CachorroQuente() {
@@ -59,12 +60,22 @@ public class CachorroQuente {
 	}
 
 
-	public int getIdentificador() {
-		return identificador;
+	public String getNome() {
+		return nome;
 	}
 
 
-	public void setIdentificador(int identificador) {
-		this.identificador = identificador;
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 }

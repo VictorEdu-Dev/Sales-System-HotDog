@@ -29,7 +29,7 @@ public class TReport extends AbstractTableModel {
         if (rowIndex < data.size()) {
             CachorroQuente venda = data.get(rowIndex);
             if (columnIndex == 0) {
-                return venda.getIdentificador(); // Retorna o valor da coluna 0 (ID).
+                return venda.getNome(); // Retorna o valor da coluna 0 (ID).
             } else if (columnIndex == 1) {
                 return venda.getProteina(); // Retorna o valor da coluna 1 (Proteína).
             } else if (columnIndex == 2) {
